@@ -3,6 +3,8 @@
 -- update--001.sql
 --
 
+CREATE EXTENSION IF NOT EXISTS hstore;
+
 --------------------------------------------------------------------------------
 CREATE SCHEMA _pgmailer AUTHORIZATION :"schema_owner";
 REVOKE ALL ON SCHEMA _pgmailer FROM public;
@@ -47,12 +49,12 @@ CREATE TABLE _pgmailer.outmsg(
 
   CONSTRAINT outmsg_pkey PRIMARY KEY (id),
   CONSTRAINT outmsg_ukey0 UNIQUE (trackuid),
-  CONSTRAINT outmsg_chk0 CHECK (state = ANY ('{waiting,queued,locked,sended,failed,readed}'))
+  CONSTRAINT outmsg_chk0 CHECK (state = ANY ('{waiting,queued,locked,sended,failed,readed}')),
   CONSTRAINT outmsg_chk1 CHECK (sendattempts >= 0)
 );
 ALTER TABLE _pgmailer.outmsg OWNER TO :"schema_owner";
 
 CREATE INDEX outmsg_idx0 ON _pgmailer.outmsg (state, priority, mo);
-CREATE INDEX outmsg_idx1 ON pgmailer.outmsg (trackuid);
-CREATE INDEX outmsg_idx2 ON pgmailer.outmsg USING GIST (customdata);
+CREATE INDEX outmsg_idx1 ON _pgmailer.outmsg (trackuid);
+CREATE INDEX outmsg_idx2 ON _pgmailer.outmsg USING GIST (customdata);
 --------------------------------------------------------------------------------

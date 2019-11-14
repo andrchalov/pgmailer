@@ -11,7 +11,7 @@ AS $function$
 DECLARE
   v_state text;
 BEGIN
-  UPDATE pgmailer.outmsg
+  UPDATE _pgmailer.outmsg
     SET sended = now()
     WHERE id = a_outmsg_id
       AND state = 'locked'
