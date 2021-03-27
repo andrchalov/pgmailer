@@ -20,7 +20,7 @@ BEGIN
     WHERE state = 'queued'
     ORDER BY priority DESC, mo ASC
     LIMIT 1
-    FOR UPDATE
+    FOR UPDATE SKIP LOCKED
     INTO v_outmsg;
   --
   IF found THEN
