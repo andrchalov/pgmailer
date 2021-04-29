@@ -2,7 +2,8 @@ FROM alpine:latest
 
 RUN apk -U --no-cache add \
   python3 \
-  py-psycopg2 \
+  py3-pip \
+  py3-psycopg2 \
   su-exec && \
   rm -rf /var/cache/*
 
